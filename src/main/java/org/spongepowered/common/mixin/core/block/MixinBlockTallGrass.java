@@ -29,12 +29,11 @@ import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import org.spongepowered.api.block.BlockState;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.block.ShrubData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.common.Sponge;
-import org.spongepowered.common.data.processor.block.SpongeShrubProcessor;
+import org.spongepowered.common.data.processor.block.ShrubProcessor;
 
 import java.util.Collection;
 
@@ -43,7 +42,7 @@ public abstract class MixinBlockTallGrass extends MixinBlock {
 
     @Override
     public ImmutableList<DataManipulator<?>> getManipulators(IBlockState blockState) {
-        SpongeShrubProcessor processor = (SpongeShrubProcessor) Sponge.getSpongeRegistry().getManipulatorRegistry().getBuilder(ShrubData.class).get();
+        ShrubProcessor processor = (ShrubProcessor) Sponge.getSpongeRegistry().getManipulatorRegistry().getBuilder(ShrubData.class).get();
         return ImmutableList.<DataManipulator<?>>of(processor.createFrom(blockState).get());
     }
 

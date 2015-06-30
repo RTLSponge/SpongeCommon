@@ -35,8 +35,8 @@ import org.spongepowered.api.data.manipulator.tileentity.SignData;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.data.manipulator.tileentity.SpongeSignData;
-import org.spongepowered.common.data.processor.tileentity.SpongeSignDataProcessor;
+import org.spongepowered.common.data.manipulator.mutable.tileentity.SpongeSignData;
+import org.spongepowered.common.data.processor.tileentity.SignDataProcessor;
 
 import java.util.List;
 
@@ -64,6 +64,6 @@ public abstract class MixinTileEntitySign extends MixinTileEntity implements Sig
 
     @Override
     public Optional<SignData> getData() {
-        return new SpongeSignDataProcessor().createFrom(this);
+        return new SignDataProcessor().createFrom(this);
     }
 }

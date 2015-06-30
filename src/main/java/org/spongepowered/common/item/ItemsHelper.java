@@ -29,7 +29,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.manipulator.SingleValueData;
 import org.spongepowered.api.data.manipulator.item.BlockItemData;

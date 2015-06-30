@@ -24,11 +24,10 @@
  */
 package org.spongepowered.common.mixin.core.world;
 
-import static org.spongepowered.common.data.DataTransactionBuilder.builder;
-
 import com.flowpowered.math.vector.Vector2i;
 import com.flowpowered.math.vector.Vector3i;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
@@ -41,9 +40,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
-import org.spongepowered.api.data.DataManipulator;
-import org.spongepowered.api.data.DataPriority;
-import org.spongepowered.api.data.DataTransactionResult;
+import org.spongepowered.api.data.manipulator.DataManipulator;
+import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.util.PositionOutOfBoundsException;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.world.Chunk;
@@ -55,11 +53,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.common.data.SpongeBlockProcessor;
 import org.spongepowered.common.data.SpongeManipulatorRegistry;
+import org.spongepowered.common.data.BlockDataProcessor;
+import org.spongepowered.common.data.SpongeDataRegistry;
+import org.spongepowered.common.interfaces.IMixinWorld;
 import org.spongepowered.common.interfaces.block.IMixinBlock;
 import org.spongepowered.common.util.SpongeHooks;
 import org.spongepowered.common.util.VecHelper;
 import org.spongepowered.common.world.storage.SpongeChunkLayout;
 
+import java.util.List;
 import java.util.Collection;
 
 @NonnullByDefault
@@ -149,18 +151,8 @@ public abstract class MixinChunk implements Chunk {
     }
 
     @Override
-    public <T extends DataManipulator<T>> Optional<T> getData(int x, int y, int z, Class<T> dataClass) {
-        Optional<SpongeBlockProcessor<T>> blockUtilOptional = SpongeManipulatorRegistry.getInstance().getBlockUtil(dataClass);
-        if (blockUtilOptional.isPresent()) {
-            return blockUtilOptional.get().fromBlockPos(this.worldObj, new BlockPos(x, y, z));
-        }
-        return Optional.absent();
-    }
-
-
-    @Override
-    public <T extends DataManipulator<T>> Optional<T> getOrCreate(int x, int y, int z, Class<T> manipulatorClass) {
-        Optional<SpongeBlockProcessor<T>> blockUtilOptional = SpongeManipulatorRegistry.getInstance().getBlockUtil(manipulatorClass);
+    public <T extends DataManipulator<T, ?>> Optional<T> getData(int x, int y, int z, Class<T> dataClass) {
+        Optional<BlockDataProcessor<T>> blockUtilOptional = SpongeDataRegistry.getInstance().getBlockDataFor(dataClass);
         if (blockUtilOptional.isPresent()) {
             return blockUtilOptional.get().fromBlockPos(this.worldObj, new BlockPos(x, y, z));
         }
@@ -168,28 +160,7 @@ public abstract class MixinChunk implements Chunk {
     }
 
     @Override
-    public <T extends DataManipulator<T>> boolean remove(int x, int y, int z, Class<T> manipulatorClass) {
-        Optional<SpongeBlockProcessor<T>> blockUtilOptional = SpongeManipulatorRegistry.getInstance().getBlockUtil(manipulatorClass);
-        if (blockUtilOptional.isPresent()) {
-            return blockUtilOptional.get().remove(this.worldObj, new BlockPos(x, y, z));
-        }
-        return false;
-    }
-
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T extends DataManipulator<T>> DataTransactionResult offer(int x, int y, int z, T manipulatorData, DataPriority priority) {
-        Optional<SpongeBlockProcessor<T>> blockUtilOptional = SpongeManipulatorRegistry.getInstance().getBlockUtil((Class<T>) (Class) manipulatorData
-                .getClass());
-        if (blockUtilOptional.isPresent()) {
-            return blockUtilOptional.get().setData(this.worldObj, new BlockPos(x, y, z), manipulatorData, priority);
-        }
-        return builder().result(DataTransactionResult.Type.FAILURE).build();
-    }
-
-    @Override
-    public Collection<DataManipulator<?>> getManipulators(int x, int y, int z) {
+    public ImmutableList<ImmutableDataManipulator<?, ?>> getManipulators(int x, int y, int z) {
         final BlockPos blockPos = new BlockPos(x, y, z);
         return ((IMixinBlock) getBlock(x, y, z)).getManipulators(this.worldObj, blockPos);
     }

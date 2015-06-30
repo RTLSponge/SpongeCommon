@@ -26,7 +26,7 @@ package org.spongepowered.common.mixin.core.item.data;
 
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.PotionEffectData;
 import org.spongepowered.asm.mixin.Mixin;
 

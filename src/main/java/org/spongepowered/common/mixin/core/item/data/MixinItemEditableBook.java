@@ -26,7 +26,7 @@ package org.spongepowered.common.mixin.core.item.data;
 
 import net.minecraft.item.ItemEditableBook;
 import net.minecraft.item.ItemStack;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.DisplayNameData;
 import org.spongepowered.api.data.manipulator.item.AuthorData;
 import org.spongepowered.api.data.manipulator.item.CloneableData;

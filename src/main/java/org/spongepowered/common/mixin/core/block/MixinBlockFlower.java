@@ -29,12 +29,11 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import org.spongepowered.api.block.BlockState;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.block.FlowerData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.common.Sponge;
-import org.spongepowered.common.data.processor.block.SpongePlantProcessor;
+import org.spongepowered.common.data.processor.block.PlantProcessor;
 
 import java.util.Collection;
 
@@ -48,7 +47,7 @@ public abstract class MixinBlockFlower extends MixinBlock {
 
     @Override
     public ImmutableList<DataManipulator<?>> getManipulators(IBlockState blockState) {
-        SpongePlantProcessor processor = (SpongePlantProcessor) Sponge.getSpongeRegistry().getManipulatorRegistry().getBuilder(FlowerData.class).get();
+        PlantProcessor processor = (PlantProcessor) Sponge.getSpongeRegistry().getManipulatorRegistry().getBuilder(FlowerData.class).get();
         return ImmutableList.<DataManipulator<?>>of(processor.createFrom(blockState).get());
     }
 }

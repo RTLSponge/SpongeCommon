@@ -25,7 +25,7 @@
 package org.spongepowered.common.interfaces.item;
 
 import net.minecraft.item.ItemStack;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 
 import java.util.List;
 

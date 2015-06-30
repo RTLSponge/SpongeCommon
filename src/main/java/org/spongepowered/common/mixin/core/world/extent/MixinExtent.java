@@ -35,9 +35,6 @@ import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.ScheduledBlockUpdate;
 import org.spongepowered.api.block.tileentity.TileEntity;
 import org.spongepowered.api.data.DataContainer;
-import org.spongepowered.api.data.DataManipulator;
-import org.spongepowered.api.data.DataPriority;
-import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.Property;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.service.persistence.InvalidDataException;
@@ -46,60 +43,12 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.biome.BiomeType;
 import org.spongepowered.api.world.extent.Extent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.common.data.SpongeBlockProcessor;
-import org.spongepowered.common.data.SpongeManipulatorRegistry;
 
 import java.util.Collection;
 
 @Mixin({World.class, Chunk.class})
 public abstract class MixinExtent implements Extent {
 
-    @Override
-    public <T extends DataManipulator<T>> Optional<T> getData(Vector3i position, Class<T> dataClass) {
-        return getData(position.getX(), position.getY(), position.getZ(), dataClass);
-    }
-
-    @Override
-    public <T extends DataManipulator<T>> Optional<T> getOrCreate(Vector3i position, Class<T> manipulatorClass) {
-        return getOrCreate(position.getX(), position.getY(), position.getZ(), manipulatorClass);
-    }
-
-    @Override
-    public <T extends DataManipulator<T>> boolean remove(Vector3i position, Class<T> manipulatorClass) {
-        return remove(position.getX(), position.getY(), position.getZ(), manipulatorClass);
-    }
-
-    @Override
-    public <T extends DataManipulator<T>> boolean isCompatible(Vector3i position, Class<T> manipulatorClass) {
-        return isCompatible(position.getX(), position.getY(), position.getZ(), manipulatorClass);
-    }
-
-    @Override
-    public <T extends DataManipulator<T>> boolean isCompatible(int x, int y, int z, Class<T> manipulatorClass) {
-        Optional<SpongeBlockProcessor<T>> blockUtilOptional = SpongeManipulatorRegistry.getInstance().getBlockUtil(manipulatorClass);
-        // TODO for now, this is what we have to deal with...
-        return blockUtilOptional.isPresent();
-    }
-
-    @Override
-    public <T extends DataManipulator<T>> DataTransactionResult offer(Vector3i position, T manipulatorData) {
-        return offer(position.getX(), position.getY(), position.getZ(), manipulatorData);
-    }
-
-    @Override
-    public <T extends DataManipulator<T>> DataTransactionResult offer(int x, int y, int z, T manipulatorData) {
-        return offer(x, y, z, manipulatorData, DataPriority.DATA_MANIPULATOR);
-    }
-
-    @Override
-    public <T extends DataManipulator<T>> DataTransactionResult offer(Vector3i position, T manipulatorData, DataPriority priority) {
-        return offer(position.getX(), position.getY(), position.getZ(), manipulatorData, priority);
-    }
-
-    @Override
-    public Collection<DataManipulator<?>> getManipulators(Vector3i position) {
-        return getManipulators(position.getX(), position.getY(), position.getZ());
-    }
 
     @Override
     public <T extends Property<?, ?>> Optional<T> getProperty(Vector3i position, Class<T> propertyClass) {

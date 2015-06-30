@@ -26,7 +26,7 @@ package org.spongepowered.common.entity;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.type.HorseColor;
 import org.spongepowered.api.data.type.HorseStyle;

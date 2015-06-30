@@ -25,8 +25,8 @@
 package org.spongepowered.common.mixin.core.data.holders;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.spongepowered.common.data.DataTransactionBuilder.successNoData;
-import static org.spongepowered.common.data.DataTransactionBuilder.successReplaceData;
+import static org.spongepowered.api.data.DataTransactionBuilder.successNoData;
+import static org.spongepowered.api.data.DataTransactionBuilder.successReplaceData;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockButton;
@@ -34,12 +34,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.api.block.BlockState;
-import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.DataPriority;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.manipulator.block.PoweredData;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.common.data.manipulator.block.SpongePoweredData;
+import org.spongepowered.common.data.manipulator.mutable.block.SpongePoweredData;
 import org.spongepowered.common.interfaces.block.IMixinPoweredHolder;
 import org.spongepowered.common.mixin.core.block.MixinBlock;
 

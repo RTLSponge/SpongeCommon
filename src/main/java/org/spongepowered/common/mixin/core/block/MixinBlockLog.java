@@ -25,8 +25,8 @@
 package org.spongepowered.common.mixin.core.block;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.spongepowered.common.data.DataTransactionBuilder.successNoData;
-import static org.spongepowered.common.data.DataTransactionBuilder.successReplaceData;
+import static org.spongepowered.api.data.DataTransactionBuilder.successNoData;
+import static org.spongepowered.api.data.DataTransactionBuilder.successReplaceData;
 
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockNewLog;
@@ -44,7 +44,7 @@ import org.spongepowered.api.data.type.TreeType;
 import org.spongepowered.api.data.type.TreeTypes;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.common.data.manipulator.block.SpongeTreeData;
+import org.spongepowered.common.data.manipulator.mutable.block.SpongeTreeData;
 import org.spongepowered.common.interfaces.block.IMixinBlockTree;
 
 @NonnullByDefault

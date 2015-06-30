@@ -36,7 +36,7 @@ import org.spongepowered.api.data.manipulator.tileentity.BannerData;
 import org.spongepowered.api.data.type.DyeColor;
 import org.spongepowered.api.service.persistence.InvalidDataException;
 import org.spongepowered.api.service.persistence.SerializationService;
-import org.spongepowered.common.data.manipulator.tileentity.SpongeBannerData;
+import org.spongepowered.common.data.manipulator.mutable.tileentity.SpongeBannerData;
 
 import java.util.List;
 

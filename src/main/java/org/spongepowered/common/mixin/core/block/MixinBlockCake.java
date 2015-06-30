@@ -25,8 +25,8 @@
 package org.spongepowered.common.mixin.core.block;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.spongepowered.common.data.DataTransactionBuilder.successNoData;
-import static org.spongepowered.common.data.DataTransactionBuilder.successReplaceData;
+import static org.spongepowered.api.data.DataTransactionBuilder.successNoData;
+import static org.spongepowered.api.data.DataTransactionBuilder.successReplaceData;
 
 import net.minecraft.block.BlockCake;
 import net.minecraft.block.state.IBlockState;
@@ -37,7 +37,7 @@ import org.spongepowered.api.data.DataPriority;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.manipulator.block.LayeredData;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.common.data.manipulator.block.SpongeLayeredData;
+import org.spongepowered.common.data.manipulator.mutable.block.SpongeLayeredData;
 import org.spongepowered.common.interfaces.block.IMixinBlockLayerable;
 
 @Mixin(BlockCake.class)
