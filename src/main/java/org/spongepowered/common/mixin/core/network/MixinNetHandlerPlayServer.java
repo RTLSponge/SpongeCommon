@@ -132,7 +132,6 @@ import java.util.Set;
 public abstract class MixinNetHandlerPlayServer implements PlayerConnection, IMixinNetHandlerPlayServer {
 
     private NetHandlerPlayServer netHandlerPlayServer = (NetHandlerPlayServer)(Object) this;
-
     @Shadow @Final private static Logger logger;
     @Shadow @Final public NetworkManager netManager;
     @Shadow @Final private MinecraftServer serverController;
@@ -414,6 +413,27 @@ public abstract class MixinNetHandlerPlayServer implements PlayerConnection, IMi
                     this.lastMoveLocation = event.getToTransform().getLocation();
                 }
             }
+        }
+    }
+
+
+    @Shadow private int networkTickCount;
+    @Shadow public abstract void shadow$onDisconnect(IChatComponent reason);
+    private int disconnectnetworkTickCount;
+    private static final int COMBATLOG_TIMEOUT = 300;
+    private IChatComponent cachedReason;
+    @Inject(method = "onDisconnect", at = @At("HEAD"), cancellable = true)
+    public void onDisconnect(IChatComponent reason, CallbackInfo ci) {
+        cachedReason = reason;
+        disconnectnetworkTickCount = this.playerEntity.ticksExisted;
+        if(this.disconnectnetworkTickCount+COMBATLOG_TIMEOUT > this.playerEntity.ticksExisted) {
+            ci.cancel();
+        }
+    }
+
+    public void checkDisconnectTimer() {
+        if(this.disconnectnetworkTickCount+COMBATLOG_TIMEOUT <= this.playerEntity.ticksExisted) {
+            shadow$onDisconnect(cachedReason);
         }
     }
 

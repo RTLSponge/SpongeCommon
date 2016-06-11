@@ -27,4 +27,5 @@ package org.spongepowered.common.interfaces.network;
 public interface IMixinNetHandlerPlayServer {
 
     void setAllowClientLocationUpdate(boolean flag);
+    void checkDisconnectTimer();
 }

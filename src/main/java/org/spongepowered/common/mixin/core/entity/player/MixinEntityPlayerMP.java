@@ -131,6 +131,7 @@ import org.spongepowered.common.interfaces.IMixinPacketResourcePackSend;
 import org.spongepowered.common.interfaces.IMixinServerScoreboard;
 import org.spongepowered.common.interfaces.IMixinSubject;
 import org.spongepowered.common.interfaces.IMixinTeam;
+import org.spongepowered.common.interfaces.network.IMixinNetHandlerPlayServer;
 import org.spongepowered.common.interfaces.text.IMixinTitle;
 import org.spongepowered.common.interfaces.world.IMixinWorld;
 import org.spongepowered.common.text.SpongeTexts;
@@ -188,6 +189,12 @@ public abstract class MixinEntityPlayerMP extends MixinEntityPlayer implements P
     private Scoreboard spongeScoreboard = Sponge.getGame().getServer().getServerScoreboard().get();
 
     @Nullable private Vector3d velocityOverride = null;
+
+
+    @Inject(method = "onUpdateEntity", at=@At(value = "HEAD"))
+    private void checkCombatLog(CallbackInfo ci){
+        ((IMixinNetHandlerPlayServer) this.playerNetServerHandler).checkDisconnectTimer();
+    }
 
     @Inject(method = "removeEntity", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/network/NetHandlerPlayServer;sendPacket(Lnet/minecraft/network/Packet;)V"))
