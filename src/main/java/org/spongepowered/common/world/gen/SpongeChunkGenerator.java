@@ -84,7 +84,6 @@ import org.spongepowered.common.interfaces.world.gen.IFlaggedPopulator;
 import org.spongepowered.common.interfaces.world.gen.IGenerationPopulator;
 import org.spongepowered.common.util.gen.ChunkPrimerBuffer;
 import org.spongepowered.common.util.gen.ObjectArrayMutableBiomeBuffer;
-import org.spongepowered.common.world.biome.SpongeBiomeGenerationSettings;
 import org.spongepowered.common.world.extent.SoftBufferExtentViewDownsize;
 import org.spongepowered.common.world.gen.populators.SnowPopulator;
 
@@ -210,12 +209,13 @@ public class SpongeChunkGenerator implements WorldGenerator, IChunkGenerator {
     public BiomeGenerationSettings getBiomeSettings(BiomeType type) {
         checkNotNull(type, "type");
         BiomeGenerationSettings settings = this.biomeSettings.get(type);
+
         if (settings == null) {
             if (SpongeGenerationPopulator.class.isInstance(this.baseGenerator)) {
                 // If the base generator was mod provided then we assume that it
                 // will handle its own
                 // generation so we don't add the base game's generation
-                settings = new SpongeBiomeGenerationSettings();
+                settings = type.createEmptyVanillaLikeGenerationSettings((org.spongepowered.api.world.World) this.world);
             } else {
                 settings = type.createDefaultGenerationSettings((org.spongepowered.api.world.World) this.world);
             }

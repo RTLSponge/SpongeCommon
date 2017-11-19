@@ -32,6 +32,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.ChunkGeneratorSettings;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.util.weighted.VariableAmount;
+import org.spongepowered.api.world.biome.BiomeGenerationSettings;
 import org.spongepowered.api.world.gen.populator.Cactus;
 import org.spongepowered.api.world.gen.populator.Forest;
 import org.spongepowered.api.world.gen.populator.Ore;
@@ -52,6 +53,13 @@ public abstract class MixinBiomeMesa extends MixinBiome {
 
     @Shadow @Final private boolean brycePillars;
     @Shadow @Final private boolean hasForest;
+
+    @Override
+    public BiomeGenerationSettings createEmptyVanillaLikeGenerationSettings(final org.spongepowered.api.world.World world) {
+        final BiomeGenerationSettings settings = super.createEmptyVanillaLikeGenerationSettings(world);
+        settings.getGenerationPopulators().add(new MesaBiomeGenerationPopulator(this.brycePillars, this.hasForest));
+        return settings;
+    }
 
     @Override
     public void buildPopulators(World world, SpongeBiomeGenerationSettings gensettings) {

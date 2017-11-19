@@ -88,6 +88,11 @@ public abstract class MixinBiome implements BiomeType, IMixinBiome {
     private String modId;
 
     @Override
+    public BiomeGenerationSettings createEmptyVanillaLikeGenerationSettings(org.spongepowered.api.world.World world) {
+        return new SpongeBiomeGenerationSettings();
+    }
+
+    @Override
     public BiomeGenerationSettings createDefaultGenerationSettings(org.spongepowered.api.world.World world) {
         SpongeBiomeGenerationSettings gensettings = new SpongeBiomeGenerationSettings();
         gensettings.getPopulators().clear();
